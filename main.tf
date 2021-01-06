@@ -16,8 +16,15 @@ output "caller_user" {
   value = data.aws_caller_identity.current.user_id
 }
 
+data "aws_vpc" "main" {
+  filter {
+    name   = "tag:Name"
+    values = ["fr-vpc-1"]
+  }
+}
+
 data "aws_subnet_ids" "main" {
-  vpc_id = "vpc-0673cc8ed5d2b9e2a"
+  vpc_id = data.aws_vpc.main.id #"vpc-0673cc8ed5d2b9e2a"
   tags = {
     Name = "ent-softbuild-sdlc-preprod-public-eu-west-1*"
   }
