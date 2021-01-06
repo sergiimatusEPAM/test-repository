@@ -4,6 +4,8 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
+data "aws_iam_account_alias" "main" {}
+
 output "account_id" {
   value = data.aws_caller_identity.current.account_id
 }
@@ -17,16 +19,15 @@ output "caller_user" {
 }
 
 data "aws_vpc" "main" {
-  filter {
-    name   = "tag:Name"
-    values = ["fr-vpc-1"]
+  tags = {
+    Name   = "fr-vpc-1"
   }
 }
 
 data "aws_subnet_ids" "main" {
   vpc_id = data.aws_vpc.main.id #"vpc-0673cc8ed5d2b9e2a"
   tags = {
-    Name = "ent-softbuild-sdlc-preprod-public-eu-west-1*"
+    Name = ${data.aws_iam_account_alias.main.account_alias}-public-eu-west-1*"
   }
 }
 
