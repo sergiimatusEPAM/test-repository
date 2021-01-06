@@ -9,16 +9,18 @@ data "aws_vpc" "main" {
   }
 }
 
+data "aws_iam_account_alias" "main" {}
+
 data "aws_subnet_ids" "main" {
   vpc_id = data.aws_vpc.main.id
   filter {
     name   = "tag:Name"
-    values = ["revelation-sdlc-preprod-public-eu-west-1c"]
+    values = "${data.aws_iam_account_alias.main.account_alias}-public-eu-west-1*"
   }
 }
 
 resource "aws_instance" "test_instance" {
   ami           = "ami-00ddb0e5626798373"
   instance_type = "t2.micro"
-  #subnet_id     = data.aws_subnet_ids.main.ids
+  subnet_id     = data.aws_subnet_ids.main.ids
 }
