@@ -13,9 +13,8 @@ data "aws_iam_account_alias" "main" {}
 
 data "aws_subnet_ids" "main" {
   vpc_id = data.aws_vpc.main.id
-  filter {
-    name   = "tag:Name"
-    values = "${data.aws_iam_account_alias.main.account_alias}-public-eu-west-1*"
+  tags = {
+    Name = "${data.aws_iam_account_alias.main.account_alias}-public-eu-west-1*"
   }
 }
 
