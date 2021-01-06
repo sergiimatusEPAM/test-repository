@@ -2,15 +2,8 @@ provider "aws" {
   region  = "eu-west-1"
 }
 
-data "aws_vpc" "main" {
-  filter {
-    name   = "tag:Name"
-    values = ["fr-vpc-1"]
-  }
-}
-
 data "aws_subnet_ids" "main" {
-  vpc_id = data.aws_vpc.main.id
+  vpc_id = "vpc-0673cc8ed5d2b9e2a"
   tags = {
     Name = "ent-softbuild-sdlc-preprod-public-eu-west-1*"
   }
