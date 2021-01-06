@@ -1,5 +1,5 @@
 provider "aws" {
-  region  = "eu-west-1"
+  region = "eu-west-1"
 }
 
 data "aws_caller_identity" "current" {}
@@ -20,14 +20,14 @@ output "caller_user" {
 
 data "aws_vpc" "main" {
   tags = {
-    Name   = "fr-vpc-1"
+    Name = "fr-vpc-1"
   }
 }
 
 data "aws_subnet_ids" "main" {
-  vpc_id = data.aws_vpc.main.id #"vpc-0673cc8ed5d2b9e2a"
+  vpc_id = data.aws_vpc.main.id
   tags = {
-    Name = ${data.aws_iam_account_alias.main.account_alias}-public-eu-west-1*"
+    Name = "${data.aws_iam_account_alias.main.account_alias}-public-eu-west-1*"
   }
 }
 
